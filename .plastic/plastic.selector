@@ -1,0 +1,4 @@
+repository "kai tech demo 2026-05-10_15-40-02/kai tech demo@18968332558716@cloud"
+  path "/"
+    br "/main"
+    co "/main"
