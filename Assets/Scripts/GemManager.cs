@@ -1,20 +1,31 @@
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
 public class GemManager : MonoBehaviour
 {
     
     public int gemCount;
-    public Text gemText;
+    private UIDocument uiDocument;
+    private Label gemText;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        uiDocument = GetComponent<UIDocument>();
+
+        if (uiDocument != null)
+        {
+            var root = uiDocument.rootVisualElement;
+            gemText = root.Q<Label>("Requirement");
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        gemText.text = "Gems: " + gemCount.ToString();
+        if (gemText != null)
+        {
+            gemText.text = "Gems: " + gemCount.ToString();
+        }
+            
     }
 }

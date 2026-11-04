@@ -2566,7 +2566,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 4.1
+  orthographic size: 3.7
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -3089,7 +3089,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   gemCount: 0
-  gemText: {fileID: 0}
 --- !u!4 &1018680155
 Transform:
   m_ObjectHideFlags: 0
@@ -3140,7 +3139,7 @@ MonoBehaviour:
   Composition:
     ScreenPosition: {x: 0, y: 0}
     DeadZone:
-      Enabled: 0
+      Enabled: 1
       Size: {x: 0.2, y: 0.2}
     HardLimits:
       Enabled: 0
@@ -3179,7 +3178,7 @@ MonoBehaviour:
     CustomLookAtTarget: 0
   Lens:
     FieldOfView: 34
-    OrthographicSize: 4.1
+    OrthographicSize: 3.7
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
