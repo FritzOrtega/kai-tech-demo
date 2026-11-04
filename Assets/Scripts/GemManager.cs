@@ -10,13 +10,21 @@ public class GemManager : MonoBehaviour
     
     void Start()
     {
-        uiDocument = GetComponent<UIDocument>();
+        if (uiDocument == null)
+        {
+            uiDocument = GetComponent<UIDocument>();
+        }
 
         if (uiDocument != null)
         {
             var root = uiDocument.rootVisualElement;
             gemText = root.Q<Label>("GemCount");
             UpdateGemUI();
+        }
+
+        else
+        {
+            Debug.LogError("GemManager error: UI Document either not found or assigned");
         }
     }
 
