@@ -51,15 +51,12 @@ public class Collector : MonoBehaviour
     {
         IItem item = collision.GetComponent<IItem>();
 
-        if(item != null)
-        {
-            if (item != null)
+          if (item != null)
             {
                 gm.AddGems(1);
                 CheckWinCondition();
                 item.Collect();
             }   
-        }
     }
 
     void CheckWinCondition()
