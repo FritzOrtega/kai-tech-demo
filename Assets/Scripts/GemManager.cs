@@ -4,10 +4,10 @@ public class GemManager : MonoBehaviour
 {
     
     public int gemCount;
-    private UIDocument uiDocument;
+    public UIDocument uiDocument;
     private Label gemText;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    
     void Start()
     {
         uiDocument = GetComponent<UIDocument>();
@@ -15,12 +15,20 @@ public class GemManager : MonoBehaviour
         if (uiDocument != null)
         {
             var root = uiDocument.rootVisualElement;
-            gemText = root.Q<Label>("Requirement");
+            gemText = root.Q<Label>("GemCount");
+            UpdateGemUI();
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void AddGems(int amount)
+    {
+        gemCount += amount;
+        UpdateGemUI();
+  
+    }
+    
+    
+    private void UpdateGemUI()
     {
         if (gemText != null)
         {

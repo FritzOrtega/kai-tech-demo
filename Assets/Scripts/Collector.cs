@@ -15,15 +15,36 @@ public class Collector : MonoBehaviour
 
     void Start()
     {
-        requirement = uiDoc.rootVisualElement.Q<Label>("Requirement");
-        requirement.text = "Collect " + requiredGems.ToString() + " gems!";
+        if (uiDoc != null)
+        {
+            var root = uiDoc.rootVisualElement;
+            requirement = root.Q<Label>("Requirement");
 
-        restartButton = uiDoc.rootVisualElement.Q<Button>("RestartButton");
-        restartButton.style.display = DisplayStyle.None;
-        restartButton.clicked += Restart;
+            if (requirement != null)
+            {
+                requirement.text = "Collect " + requiredGems.ToString() + " gems!";
+            }
 
-        endText = uiDoc.rootVisualElement.Q<Label>("EndText");
-        endText.style.display = DisplayStyle.None;
+            restartButton = root.Q<Button>("RestartButton");
+            if (restartButton != null)
+            {
+                restartButton.style.display = DisplayStyle.None;
+                restartButton.clicked += Restart;
+            }
+
+            endText = root.Q<Label>("EndText");
+            if (endText != null)
+            {
+                endText.style.display = DisplayStyle.None;
+            }
+
+        }
+
+        else
+        {
+            Debug.LogError("Collector error: UI Document not found");
+        }
+
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -32,27 +53,38 @@ public class Collector : MonoBehaviour
 
         if(item != null)
         {
-            item.Collect();
-            gm.gemCount++;
-            CheckWinCondition();
-
+            if (item != null)
+            {
+                gm.AddGems(1);
+                CheckWinCondition();
+                item.Collect();
+            }   
         }
     }
 
     void CheckWinCondition()
     {
-        if (gm.gemCount >= requiredGems)
+        if (gm != null && gm.gemCount >= requiredGems)
         {
-            requirement.style.display = DisplayStyle.None;
+            if (requirement != null) requirement.style.display = DisplayStyle.None;
+            if (restartButton != null) restartButton.style.display = DisplayStyle.Flex;
             
-            restartButton.style.display = DisplayStyle.Flex;
-            endText.style.display = DisplayStyle.Flex;
-            endText.text = "Great job!";
+            if (endText != null)
+            {
+                endText.style.display = DisplayStyle.Flex;
+                endText.text = "Great job!";
+            }
+            
         }
     }
 
     private void Restart()
     {
+        if (restartButton != null)
+        {
+            restartButton.clicked -= Restart;
+        }
+        
         UnityEngine.SceneManagement.SceneManager.LoadScene("kai tech demo");
     }
 }

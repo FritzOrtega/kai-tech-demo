@@ -3089,6 +3089,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   gemCount: 0
+  uiDocument: {fileID: 1384593451}
 --- !u!4 &1018680155
 Transform:
   m_ObjectHideFlags: 0
