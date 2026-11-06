@@ -5,7 +5,7 @@ public class Collector : MonoBehaviour
 {
     
     public GemManager gm;
-    public int requiredGems = 30;
+    public int requiredGems = 50;
 
     public UIDocument uiDoc;
     
