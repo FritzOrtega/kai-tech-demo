@@ -105,7 +105,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if(collision.gameObject.tag == "Damage")
         {
-            health -= 10;
+            health -= 5;
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             StartCoroutine(Flash());
 
