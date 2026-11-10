@@ -67,6 +67,6 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "kai tech demo.slnx",
+    "dotnet.defaultSolution": "kai-tech-demo.slnx",
     "dotnet.enableWorkspaceBasedDevelopment": false
 }
