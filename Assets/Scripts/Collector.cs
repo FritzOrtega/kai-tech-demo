@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 
 public class Collector : MonoBehaviour
 {
@@ -73,17 +74,33 @@ public class Collector : MonoBehaviour
                 endText.style.display = DisplayStyle.Flex;
                 endText.text = "Great job!";
             }
+
+            Time.timeScale = 0f;
             
         }
     }
 
     private void Restart()
     {
+        Time.timeScale = 1f;
+        
         if (restartButton != null)
         {
             restartButton.clicked -= Restart;
         }
         
-        UnityEngine.SceneManagement.SceneManager.LoadScene("kai tech demo");
+        Scene gameplay = SceneManager.GetActiveScene();
+        if (gameplay.buildIndex >= 0)
+        {
+            SceneManager.LoadSceneAsync(gameplay.buildIndex);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (restartButton != null)
+        {
+            restartButton.clicked -= Restart;
+        }
     }
 }

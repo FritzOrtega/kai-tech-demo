@@ -3,6 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -127,7 +128,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Damage"))
         {
-            health = Mathf.Max(health - 5, 0);
+            health = Mathf.Max(health - 10, 0);
             UpdateHealthBar();
 
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
@@ -158,14 +159,25 @@ public class PlayerMovement : MonoBehaviour
 
     private void Die()
     {
-        Destroy(gameObject);
         restartButton.style.display = DisplayStyle.Flex;
         endText.style.display = DisplayStyle.Flex;
         endText.text = "Game over!";
+
+        sr.enabled = false;
+        rb.linearVelocity = Vector2.zero;
+        rb.simulated = false;
+        this.enabled = false;
     }
 
     private void Restart()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("kai tech demo");
+        Scene gameplay = SceneManager.GetActiveScene();
+        if (gameplay.buildIndex >= 0)
+        {
+            SceneManager.LoadSceneAsync(gameplay.buildIndex);
+        } else
+        {
+            Debug.LogError($"Scene{gameplay} cannot be found in Build Profile");
+        }
     }
 }
