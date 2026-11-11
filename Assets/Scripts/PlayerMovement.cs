@@ -67,10 +67,12 @@ public class PlayerMovement : MonoBehaviour
             {
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
                 animator.SetTrigger("jump");
+                SFXManager.Play("Jump");
             } else if(context.canceled)
             {
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
                 animator.SetTrigger("jump");
+                SFXManager.Play("Jump");
             }
         }
     }
