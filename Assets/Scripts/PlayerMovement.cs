@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -13,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     private SpriteRenderer sr;
 
     [Header("Health")]
+    public int maximumHealth = 100;
     public int health = 100;
     
     [Header("Move")]
@@ -29,18 +31,36 @@ public class PlayerMovement : MonoBehaviour
     public UIDocument uiDoc;
     private Button restartButton;
     private Label endText;
+    private VisualElement healthFill;
 
     float HorizontalMovement;
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
+        health = maximumHealth;
 
-        restartButton = uiDoc.rootVisualElement.Q<Button>("RestartButton");
-        restartButton.style.display = DisplayStyle.None;
-        restartButton.clicked += Restart;
+        if (uiDoc != null)
+        {
+            var root = uiDoc.rootVisualElement;
 
-        endText = uiDoc.rootVisualElement.Q<Label>("EndText");
-        endText.style.display = DisplayStyle.None;
+            healthFill = root.Q<VisualElement>("HealthBarFill");
+            UpdateHealthBar();
+
+            restartButton = root.Q<Button>("RestartButton");
+            if (restartButton != null)
+            {
+                restartButton.style.display = DisplayStyle.None;
+                restartButton.clicked += Restart;
+            }
+            
+
+            endText = root.Q<Label>("EndText");
+            if (endText != null)
+            {
+                endText.style.display = DisplayStyle.None;
+            }
+            
+        }
     }
 
     // Update is called once per frame
@@ -105,9 +125,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Damage")
+        if(collision.gameObject.CompareTag("Damage"))
         {
-            health -= 5;
+            health = Mathf.Max(health - 5, 0);
+            UpdateHealthBar();
+
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             StartCoroutine(Flash());
 
@@ -115,6 +137,15 @@ public class PlayerMovement : MonoBehaviour
             {
                 Die();
             }
+        }
+    }
+
+    private void UpdateHealthBar()
+    {
+        if (healthFill != null && maximumHealth > 0)
+        {
+            float healthPercent = ((float)health / maximumHealth) * 100f;
+            healthFill.style.width = Length.Percent(healthPercent);
         }
     }
 
