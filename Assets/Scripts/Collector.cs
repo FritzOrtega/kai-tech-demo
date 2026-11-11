@@ -5,6 +5,8 @@ public class Collector : MonoBehaviour
 {
     
     public GemManager gm;
+    
+    [System.NonSerialized]
     public int requiredGems = 50;
 
     public UIDocument uiDoc;
@@ -22,7 +24,7 @@ public class Collector : MonoBehaviour
 
             if (requirement != null)
             {
-                requirement.text = "Collect " + requiredGems.ToString() + " gems!";
+                requirement.text = $"Collect {requiredGems} gems!";
             }
 
             restartButton = root.Q<Button>("RestartButton");
