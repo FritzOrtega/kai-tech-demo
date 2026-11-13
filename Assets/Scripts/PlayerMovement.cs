@@ -30,7 +30,9 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask groundLayer;
 
     public UIDocument uiDoc;
+    public Canvas hudCanvas;
     private Button restartButton;
+    private Button exitButton;
     private Label endText;
     private VisualElement healthFill;
 
@@ -53,6 +55,13 @@ public class PlayerMovement : MonoBehaviour
                 restartButton.style.display = DisplayStyle.None;
                 restartButton.clicked += Restart;
             }
+
+            exitButton = root.Q<Button>("ExitButton");
+            if(exitButton != null)
+            {
+                exitButton.style.display = DisplayStyle.None;
+                exitButton.clicked += Exit;
+            }
             
 
             endText = root.Q<Label>("EndText");
@@ -60,6 +69,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 endText.style.display = DisplayStyle.None;
             }
+            
             
         }
     }
@@ -160,7 +170,25 @@ public class PlayerMovement : MonoBehaviour
 
     private void Die()
     {
+        
+        if (hudCanvas != null)
+        {
+            hudCanvas.enabled = false;
+        }
+
+        if (healthFill != null)
+        {
+            if (healthFill.parent != null)
+            {
+                healthFill.parent.style.display = DisplayStyle.None;
+            } else
+            {
+                healthFill.style.display = DisplayStyle.None;
+            }
+        }
+        
         restartButton.style.display = DisplayStyle.Flex;
+        exitButton.style.display = DisplayStyle.Flex;
         endText.style.display = DisplayStyle.Flex;
         endText.text = "Game over!";
 
@@ -180,5 +208,10 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.LogError($"Scene{gameplay} cannot be found in Build Profile");
         }
+    }
+
+    private void Exit()
+    {
+        SceneManager.LoadSceneAsync("menu");
     }
 }
