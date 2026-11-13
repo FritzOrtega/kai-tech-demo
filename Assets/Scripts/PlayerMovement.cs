@@ -130,6 +130,7 @@ public class PlayerMovement : MonoBehaviour
         {
             health = Mathf.Max(health - 10, 0);
             UpdateHealthBar();
+            SFXManager.Play("Damage");
 
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             StartCoroutine(Flash());

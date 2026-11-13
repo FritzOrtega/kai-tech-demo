@@ -5388,6 +5388,9 @@ MonoBehaviour:
   - name: Jump
     audioClips:
     - {fileID: 8300000, guid: 999299c9a2186b248ab32fc0c5a4b635, type: 3}
+  - name: Damage
+    audioClips:
+    - {fileID: 8300000, guid: f5be209eaaeff7c45ada602a0c5697c5, type: 3}
 --- !u!82 &1119245920
 AudioSource:
   m_ObjectHideFlags: 0
