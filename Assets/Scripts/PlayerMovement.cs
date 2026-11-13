@@ -171,6 +171,7 @@ public class PlayerMovement : MonoBehaviour
     private void Die()
     {
         
+        SFXManager.Play("Lose");
         if (hudCanvas != null)
         {
             hudCanvas.enabled = false;

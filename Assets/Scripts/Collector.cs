@@ -76,6 +76,7 @@ public class Collector : MonoBehaviour
             }
 
             Time.timeScale = 0f;
+            SFXManager.Play("Win");
             
         }
     }
