@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Gem
   - Damage
+  - Killplane
   layers:
   - Default
   - TransparentFX

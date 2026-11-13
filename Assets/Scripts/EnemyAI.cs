@@ -7,17 +7,23 @@ public class EnemyAI : MonoBehaviour
     public float returnSpeed = 2.7f;
     public float targetRange = 7f;
     public float loseTargetRange = 10f;
-    public float stopDistance = 0.65f;
+    public float stopDistance = 0.75f;
 
     [Header("Ledge Detection")]
     public Transform ledgeCheck;
     public float ledgeRayLength = 1f;
     public LayerMask groundLayer;
 
+    [Header("Damage")]
+    public int contactDamage = 5;
+    public float damageCooldown = 1f;
+
+
     private Transform player;
     private Rigidbody2D rb;
     private Vector2 startPosition;
     private bool isChasing = false;
+    private float lastDamageTime = -999f;
     
     private void Awake()
     {
@@ -35,7 +41,6 @@ public class EnemyAI : MonoBehaviour
 
         float totalDistance = Vector2.Distance(transform.position, player.position);
 
-        // 1. Update chase state
         if (!isChasing && totalDistance <= targetRange)
         {
             isChasing = true;
@@ -80,6 +85,23 @@ public class EnemyAI : MonoBehaviour
         else
         {
             rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            if (Time.time >= lastDamageTime + damageCooldown)
+            {
+                PlayerMovement playerMovement = collision.gameObject.GetComponent<PlayerMovement>();
+                if (playerMovement != null)
+                {
+                    playerMovement.TakeDamage(contactDamage);
+                }
+
+                lastDamageTime = Time.time;
+            }
         }
     }
 

@@ -134,29 +134,43 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.DrawWireCube(groundCheckPosition.position, groundCheckRadius);
     }
 
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.CompareTag("Damage"))
+        if (collision.gameObject.CompareTag("Killplane"))
         {
-            health = Mathf.Max(health - 10, 0);
-            UpdateHealthBar();
-            SFXManager.Play("Damage");
-
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
-            StartCoroutine(Flash());
-
-            if (health <= 0)
-            {
-                Die();
-            }
+            TakeDamage(maximumHealth);
         }
+        
+        if (collision.gameObject.CompareTag("Damage"))
+        {
+            TakeDamage(10);
+        }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        if (health <= 0) return;
+
+        health = Mathf.Max(health - damage, 0);
+        UpdateHealthBar();
+        SFXManager.Play("Damage");
+
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+        StartCoroutine(Flash());
+
+        if (health <= 0)
+        {
+            Die();
+        }
+       
     }
 
     private void UpdateHealthBar()
     {
         if (healthFill != null && maximumHealth > 0)
         {
-            float healthPercent = ((float)health / maximumHealth) * 100f;
+            float healthPercent = (float)health / maximumHealth * 100f;
             healthFill.style.width = Length.Percent(healthPercent);
         }
     }
