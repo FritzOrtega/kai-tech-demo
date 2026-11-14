@@ -8,11 +8,12 @@ public class Collector : MonoBehaviour
     public GemManager gm;
     
     [System.NonSerialized]
-    public int requiredGems = 50;
+    public int requiredGems = 60;
 
+    public Canvas hudCanvas;
     public UIDocument uiDoc;
-    
     private Button restartButton;
+    private Button exitButton;
     private Label endText;
     private Label requirement;
 
@@ -33,6 +34,13 @@ public class Collector : MonoBehaviour
             {
                 restartButton.style.display = DisplayStyle.None;
                 restartButton.clicked += Restart;
+            }
+
+            exitButton = root.Q<Button>("ExitButton");
+            if(exitButton != null)
+            {
+                exitButton.style.display = DisplayStyle.None;
+                exitButton.clicked += Exit;
             }
 
             endText = root.Q<Label>("EndText");
@@ -66,6 +74,12 @@ public class Collector : MonoBehaviour
     {
         if (gm != null && gm.gemCount >= requiredGems)
         {
+            
+            if (hudCanvas != null)
+            {
+                hudCanvas.enabled = false;
+            }
+
             if (requirement != null) requirement.style.display = DisplayStyle.None;
             if (restartButton != null) restartButton.style.display = DisplayStyle.Flex;
             
@@ -74,6 +88,8 @@ public class Collector : MonoBehaviour
                 endText.style.display = DisplayStyle.Flex;
                 endText.text = "Great job!";
             }
+            
+            if (exitButton != null) exitButton.style.display = DisplayStyle.Flex;
 
             Time.timeScale = 0f;
             SFXManager.Play("Win");
@@ -103,5 +119,10 @@ public class Collector : MonoBehaviour
         {
             restartButton.clicked -= Restart;
         }
+    }
+
+    private void Exit()
+    {
+        SceneManager.LoadSceneAsync("menu");
     }
 }
