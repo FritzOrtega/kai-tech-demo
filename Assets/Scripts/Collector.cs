@@ -8,7 +8,7 @@ public class Collector : MonoBehaviour
     public GemManager gm;
     
     [System.NonSerialized]
-    public int requiredGems = 65;
+    public int requiredGems = 50;
 
     public UIDocument uiDoc;
     
