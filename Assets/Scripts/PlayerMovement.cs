@@ -33,7 +33,9 @@ public class PlayerMovement : MonoBehaviour
     public Canvas hudCanvas;
     private Button restartButton;
     private Button exitButton;
+    private Label gemCount;
     private Label endText;
+    private Label requirement;
     private VisualElement healthFill;
 
     float HorizontalMovement;
@@ -46,6 +48,8 @@ public class PlayerMovement : MonoBehaviour
         {
             var root = uiDoc.rootVisualElement;
 
+            requirement = root.Q<Label>("Requirement");
+            gemCount = root.Q<Label>("GemCount");
             healthFill = root.Q<VisualElement>("HealthBarFill");
             UpdateHealthBar();
 
@@ -202,10 +206,14 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         
+        requirement.style.display = DisplayStyle.None;
+        gemCount.style.display = DisplayStyle.None;
+
         restartButton.style.display = DisplayStyle.Flex;
         exitButton.style.display = DisplayStyle.Flex;
         endText.style.display = DisplayStyle.Flex;
         endText.text = "Game over!";
+        MusicManager.pauseBGM();
 
         sr.enabled = false;
         rb.linearVelocity = Vector2.zero;
@@ -223,6 +231,7 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.LogError($"Scene{gameplay} cannot be found in Build Profile");
         }
+        MusicManager.playBGM(true);
     }
 
     private void Exit()

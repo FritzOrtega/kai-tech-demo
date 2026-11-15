@@ -16,18 +16,22 @@ public class Collector : MonoBehaviour
     private Button exitButton;
     private Label endText;
     private Label requirement;
+    private VisualElement healthFill;
 
     void Start()
     {
         if (uiDoc != null)
         {
             var root = uiDoc.rootVisualElement;
+
             requirement = root.Q<Label>("Requirement");
 
             if (requirement != null)
             {
                 requirement.text = $"Collect {requiredGems} gems!";
             }
+
+            healthFill = root.Q<VisualElement>("HealthBarFill");
 
             restartButton = root.Q<Button>("RestartButton");
             if (restartButton != null)
@@ -86,13 +90,24 @@ public class Collector : MonoBehaviour
             if (endText != null)
             {
                 endText.style.display = DisplayStyle.Flex;
-                endText.text = "Great job!";
+                endText.text = "Goal cleared! Great job!";
             }
             
             if (exitButton != null) exitButton.style.display = DisplayStyle.Flex;
+            if (healthFill != null)
+        {
+            if (healthFill.parent != null)
+            {
+                healthFill.parent.style.display = DisplayStyle.None;
+            } else
+            {
+                healthFill.style.display = DisplayStyle.None;
+            }
+        }
 
             Time.timeScale = 0f;
             SFXManager.Play("Win");
+            MusicManager.pauseBGM();
             
         }
     }

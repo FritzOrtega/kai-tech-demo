@@ -41,25 +41,25 @@ public class MusicManager : MonoBehaviour
         Instance.audioSource.volume = volume;
     }
 
-    public void playBGM(bool resetMusic, AudioClip audioClip = null)
+    public static void playBGM(bool resetMusic, AudioClip audioClip = null)
     {
         if(audioClip != null)
         {
-            audioSource.clip = audioClip;
+            Instance.audioSource.clip = audioClip;
         }
         
-        if (audioSource.clip != null)
+        if (Instance.audioSource.clip != null)
         {
             if(resetMusic)
             {
-                audioSource.Stop();
+                Instance.audioSource.Stop();
             }
-            audioSource.Play();
+            Instance.audioSource.Play();
         }
     }
 
-    public void pauseBGM()
+    public static void pauseBGM()
     {
-        audioSource.Pause();
+        Instance.audioSource.Pause();
     }
 }

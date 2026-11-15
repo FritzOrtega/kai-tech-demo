@@ -5,7 +5,7 @@ public class GemManager : MonoBehaviour
     
     public int gemCount;
     public UIDocument uiDocument;
-    private Label gemText;
+    public Label gemText;
 
     
     void Start()
