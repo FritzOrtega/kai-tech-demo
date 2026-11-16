@@ -257,6 +257,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4962611956470791416}
   - component: {fileID: 7411782200699496504}
+  - component: {fileID: 757118828917517315}
   m_Layer: 0
   m_Name: LedgeCheck
   m_TagString: Untagged
@@ -296,10 +297,37 @@ MonoBehaviour:
   targetRange: 7
   loseTargetRange: 10
   stopDistance: 0.65
-  ledgeCheck: {fileID: 0}
+  ledgeCheck: {fileID: 4962611956470791416}
   ledgeRayLength: 1
   groundLayer:
     serializedVersion: 2
     m_Bits: 0
   contactDamage: 5
   damageCooldown: 1
+--- !u!50 &757118828917517315
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7467182412466610454}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
