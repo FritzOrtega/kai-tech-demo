@@ -18,26 +18,45 @@ public class EnemyAI : MonoBehaviour
     public int contactDamage = 5;
     public float damageCooldown = 1f;
 
-
     private Transform player;
     private Rigidbody2D rb;
     private Vector2 startPosition;
+    private Vector3 initialScale;
     private bool isChasing = false;
     private float lastDamageTime = -999f;
     
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        startPosition = transform.position; // Save the enemy's initial spawn point
+        startPosition = transform.position;
+        initialScale = transform.localScale;
+    }
 
+    private void Start()
+    {
+        FindPlayer();
+    }
+
+    private void FindPlayer()
+    {
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-        if (playerObj != null) player = playerObj.transform;
-
+        if (playerObj != null) 
+        {
+            player = playerObj.transform;
+        }
+        else
+        {
+            Debug.LogWarning("EnemyAI: Could not find GameObject with tag 'Player'!");
+        }
     }
 
     private void FixedUpdate()
     {
-        if (player == null) return;
+        if (player == null) 
+        {
+            FindPlayer();
+            return;
+        }
 
         float totalDistance = Vector2.Distance(transform.position, player.position);
 
@@ -56,11 +75,9 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
-            
             MoveTowardX(startPosition.x, returnSpeed, 0.1f);
         }
     }
-        
 
     private void MoveTowardX(float targetX, float speed, float threshold)
     {
@@ -69,7 +86,8 @@ public class EnemyAI : MonoBehaviour
         if (horizontalDistance > threshold)
         {
             float directionX = Mathf.Sign(targetX - transform.position.x);
-            transform.localScale = new Vector3(directionX, 1, 1);
+            
+            transform.localScale = new Vector3(Mathf.Abs(initialScale.x) * directionX, initialScale.y, initialScale.z);
 
             bool isGroundAhead = Physics2D.Raycast(ledgeCheck.position, Vector2.down, ledgeRayLength, groundLayer);
 
