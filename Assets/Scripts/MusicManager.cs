@@ -62,4 +62,5 @@ public class MusicManager : MonoBehaviour
     {
         Instance.audioSource.Pause();
     }
+
 }

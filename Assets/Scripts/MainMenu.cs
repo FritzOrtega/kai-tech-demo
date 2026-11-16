@@ -17,7 +17,6 @@ public class MainMenu : MonoBehaviour
     public void PlayGame()
     {
         SceneManager.LoadSceneAsync(gameplay);
-        MusicManager.playBGM(true);
     }
 
     public void QuitGame()

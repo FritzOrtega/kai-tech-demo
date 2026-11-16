@@ -1373,7 +1373,6 @@ MonoBehaviour:
     m_Bits: 8
   uiDoc: {fileID: 1384593451}
   hudCanvas: {fileID: 1857457334}
-  mainmenuButton: {fileID: 207004093}
 --- !u!95 &244456923
 Animator:
   serializedVersion: 7
